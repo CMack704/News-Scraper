@@ -1,8 +1,7 @@
 $.getJSON("/articles", function(data) {
     for (var i = 0; i < data.length; i++) {
-      $("#articles").append(`<img src='${data.img} alt='Game Image'>
-      <p data-id='${data[i]._id}'>${data[i].title}</p>
-      <p>${data.description}</p>
+      $("#articles").append(`<p data-id='${data[i]._id}'>${data[i].title}</p>
+      <p>${data[i].description}</p>
       <a href='${data[i].link}'>${data[i].link}</a>`);
     }
   });
