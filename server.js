@@ -24,17 +24,17 @@ mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true 
 
 
 app.get("/scrape", function (req, res) {
-    axios.get("https://old.reddit.com/r/gaming/new/").then(function (response) {
+    axios.get("http://old.reddit.com/r/gaming/new/").then(function (response) {
         var $ = cheerio.load(response.data);
 
-        $("article").each(function (i, element) {
+        $("p.title").each(function (i, element) {
 
             var result = {};
 
-            result.title = $(this)
-                .children("h3")
+            result.title = $(element)
+                .children("a")
                 .text();
-            result.link = $(this)
+            result.link = $(element)
                 .children("a")
                 .attr("href");
             db.Article.create(result)
