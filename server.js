@@ -24,7 +24,7 @@ mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true 
 
 
 app.get("/scrape", function (req, res) {
-    axios.get("https://www.gamespot.com/news/").then(function (response) {
+    axios.get("https://old.reddit.com/r/gaming/new/").then(function (response) {
         var $ = cheerio.load(response.data);
 
         $("article").each(function (i, element) {
@@ -37,12 +37,6 @@ app.get("/scrape", function (req, res) {
             result.link = $(this)
                 .children("a")
                 .attr("href");
-            result.description = $(this)
-                .children("p")
-                .text();
-            result.img = $(this)
-                .children("img")
-                .attr("src");
             db.Article.create(result)
                 .then(function (dbArticle) {
                     console.log(dbArticle);
